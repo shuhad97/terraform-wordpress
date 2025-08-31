@@ -1,27 +1,27 @@
 resource "aws_vpc" "vpc" {
-    cidr_block = "10.0.0.0/24"
+    cidr_block = var.vpc_cidr
 
     tags = {
-      Name = "wordpress-vpc"
+      Name = "${var.project_name}-vpc"
     }
 }
 
 resource "aws_subnet" "public_subnet" {
     vpc_id = aws_vpc.vpc.id
-    cidr_block = "10.0.0.0/27"
+    cidr_block = var.public_subnet_cidr
     
     tags = {
-      Name = "wordpress-public-subnet"
+      Name = "${var.project_name}-public-subnet"
     }
 
 }
 
 resource "aws_subnet" "private_subnet" {
     vpc_id = aws_vpc.vpc.id
-    cidr_block = "10.0.0.128/25"
+    cidr_block = var.private_subnet_cidr
     
     tags = {
-      Name = "wordpress-private-subnet"
+      Name = "${var.project_name}-private-subnet"
     }
 
 }
@@ -30,7 +30,7 @@ resource "aws_internet_gateway" "igw" {
     vpc_id = aws_vpc.vpc.id
 
     tags = {
-        Name = "wordpress-igw"
+        Name = "${var.project_name}-igw"
     }
 
 }
@@ -39,7 +39,7 @@ resource "aws_eip" "nat_ip" {
   domain   = "vpc"
 
     tags = {
-        Name = "wordpress-nat-eip"
+        Name = "${var.project_name}-nat-eip"
     }
 }
 
@@ -48,7 +48,7 @@ resource "aws_nat_gateway" "ngw" {
   subnet_id     = aws_subnet.public_subnet.id
 
   tags = {
-    Name = "wordpress-ngw"
+    Name = "${var.project_name}-ngw"
   }
 
   depends_on = [aws_internet_gateway.igw]

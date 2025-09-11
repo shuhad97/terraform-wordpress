@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+exec > >(tee /tmp/user_data.log) 2>&1
 
 # Update packages
 apt-get update -y
@@ -25,6 +26,8 @@ MYSQL_ROOT_PASSWORD="${mysql_root_password}"
 mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '$${MYSQL_ROOT_PASSWORD}';"
 mysql -e "FLUSH PRIVILEGES;"
 
+echo "root succesfully logged in"
+
 # Create WordPress database and user
 DB_NAME="wordpress"
 DB_USER="${db_user}"    
@@ -35,10 +38,15 @@ mysql -u root -p$${MYSQL_ROOT_PASSWORD} -e "CREATE USER IF NOT EXISTS '$${DB_USE
 mysql -u root -p$${MYSQL_ROOT_PASSWORD} -e "GRANT ALL PRIVILEGES ON \`$${DB_NAME}\`.* TO '$${DB_USER}'@'localhost';"
 mysql -u root -p$${MYSQL_ROOT_PASSWORD} -e "FLUSH PRIVILEGES;"
 
+echo "Database created sucessfully"
+
+
 # Download and set up WordPress
 cd /tmp
 wget https://wordpress.org/latest.tar.gz
 tar -xzf latest.tar.gz
+
+echo "WordPress downloaded successfully"
 
 # Remove default Apache page and copy WordPress
 rm -f /var/www/html/index.html

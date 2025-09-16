@@ -13,17 +13,26 @@ resource "aws_subnet" "public_subnet" {
     tags = {
       Name = "${var.project_name}-public-subnet"
     }
-
 }
 
-resource "aws_subnet" "private_subnet" {
+resource "aws_subnet" "private_subnet_1" {
     vpc_id = aws_vpc.vpc.id
-    cidr_block = var.private_subnet_cidr
+    cidr_block = var.private_subnet_cidr_1
+    availability_zone = var.private_subnet_1_az
     
     tags = {
-      Name = "${var.project_name}-private-subnet"
+      Name = "${var.project_name}-private-subnet-1"
     }
+}
 
+resource "aws_subnet" "private_subnet_2" {
+    vpc_id = aws_vpc.vpc.id
+    cidr_block = var.private_subnet_cidr_2
+    availability_zone = var.private_subnet_2_az
+    
+    tags = {
+      Name = "${var.project_name}-private-subnet-2"
+    }
 }
 
 resource "aws_internet_gateway" "igw" {
@@ -32,7 +41,6 @@ resource "aws_internet_gateway" "igw" {
     tags = {
         Name = "${var.project_name}-igw"
     }
-
 }
 
 

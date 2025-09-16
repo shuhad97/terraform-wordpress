@@ -27,14 +27,6 @@ resource "aws_security_group" "wordpress-sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-   ingress {
-    description = "Allow SSH"
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["185.237.61.88/32"]  # Remove after debugging
-  }
-
 }
 
 
@@ -61,7 +53,7 @@ resource "aws_instance" "ec2-instance" {
   instance_type = "t2.micro"
 
   user_data = templatefile("${path.module}/user_data.sh.tpl",{
-    mysql_root_password = var.mysql_root_password,
+    rds_address = var.rds_address
     db_user = var.db_user,
     db_password = var.db_password  
   })

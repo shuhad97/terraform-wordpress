@@ -10,7 +10,6 @@ jobs:
     - name: checkout code
       uses: actions/checkout@v4
 
-    steps:
     - name: Terraform action
       uses: hashicorp/setup-terraform@v3
 

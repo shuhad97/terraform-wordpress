@@ -18,11 +18,6 @@ variable "db_password" {
     type = string
 }
 
-variable "mysql_root_password" {
-  description = "MySQL Root Password"
-  type = string
-}
-
 variable "rds_address" {
   description = "Endpoint for RDS"
   type = string

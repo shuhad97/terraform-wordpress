@@ -8,9 +8,12 @@ variable "db_password" {
   type        = string
 }
 
-
-variable "mysql_root_password" {
-  description = "MySQL Root Password"
-  type        = string
+variable "s3_bucket" {
+  description = "S3 bucket name"
+  type= string
 }
 
+variable "region" {
+  description = "AWS region"
+  type = string
+}

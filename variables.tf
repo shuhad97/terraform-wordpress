@@ -10,10 +10,10 @@ variable "db_password" {
 
 variable "s3_bucket" {
   description = "S3 bucket name"
-  type= string
+  type        = string
 }
 
 variable "region" {
   description = "AWS region"
-  type = string
+  type        = string
 }
